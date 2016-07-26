@@ -6,45 +6,47 @@ Peridot's matcher library: [Leo](https://github.com/peridot-php/leo).
 ## Usage
 
 ```php
+use Peridot\ObjectPath\ObjectPath;
+
+// Works with nested arrays, objects, or a mixture of both.
 $data = [
   'name' => 'Brian',
   'hobbies' => [
     'reading',
     'programming',
-    'lion taming'  
+    'lion taming'
   ],
-  'address' => [
+  'address' => new stdClass()
+  [
     'street' => '1234 Lane',
-    'zip' => '12345'  
+    'zip' => '12345'
   ]
 ];
 
-use Peridot\ObjectPath\ObjectPath;
+$data['address']->street = '1234 Lane';
+$data['address']->zip = 12345;
 
+// Wraps the value with ObjectPath
 $path = new ObjectPath($data);
+
+// Get the value directly
+$reading = $path->{'hobbies[0]'};
+$zip = $path->{'address[zip]'};
+
+// Sets the value
+$path->{'address->street'} = '12345 Street';
+
+// Removes the property
+unset($path->{'hobbies[2]'});
+
+
+
+// backward compatible with peridot-php/object-path
 $reading = $path->get('hobbies[0]');
 $zip = $path->get('address[zip]');
 
 // the result of get() is an ObjectPathValue instance
 $value = $reading->getPropertyValue();
-
-// The syntax also works for objects and nested structures
-
-$data = new stdClass();
-
-$data->name = 'Brian';
-$data->address = new stdClass();
-$data->address->zip = '12345';
-
-$hobby = new stdClass();
-$hobby->name = 'reading';
-$hobby->style = 'relaxing';
-$data->hobbies = [$hobby];
-
-$path = new ObjectPath($data);
-$name = $path->get('name');
-$zip = $path->get('address->zip');
-$reading = $path->get('hobbies[0]->name');
 ```
 
 ## Tests
