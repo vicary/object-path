@@ -1,14 +1,21 @@
 {
-    "name": "peridot-php/object-path",
-    "description": "A string syntax to fetch values from array and object hierarchies",
+    "name": "vicary/object-path",
+    "description": "Fork of peridot-php/object-path. A string syntax to fetch values from array and object hierarchies",
     "keywords": ["object", "array", "traversal"],
     "license": "MIT",
     "authors": [
+        {
+            "name": "Vicary Archangel",
+            "email": "vicary@yahoo.com"
+        },
         {
             "name": "Brian Scaturro",
             "email": "scaturrob@gmail.com"
         }
     ],
+    "replace": {
+        "peridot-php/object-path": "1.0.*"
+    },
     "require": {
         "php":">=5.4.0"
     },
